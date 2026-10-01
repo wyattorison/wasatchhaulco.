@@ -1,4 +1,4 @@
-# Wasatch Haul Co. website
+# Shoreline Junk Removal website
 
 Saturday-only junk removal in Davis County, Utah.
 
