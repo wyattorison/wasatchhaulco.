@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Wasatch Haul Co.: Saturday-only junk removal in Kaysville, Farmington, Layton and all of Davis County, Utah. Book by Thursday for a free quote.">
+<title>Wasatch Haul Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: work-sign hero with an interactive trailer load gauge, then plain stacked sections on a snow-grey ground */
+:root{
+  --bg:#EDF0F1; --surface:#FFFFFF; --ink:#15212B; --muted:#56656F; --line:#CDD5D9;
+  --hivis:#F2B100; --hivis-ink:#15212B; --slate:#1F3445; --slate-ink:#EDF0F1;
+  --display:"Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body:"Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F171E; --surface:#16222C; --ink:#E6ECEF; --muted:#9AAAB4; --line:#2A3A47;
+  --hivis:#F5BD1F; --hivis-ink:#121A20; --slate:#1C2E3C; --slate-ink:#E6ECEF; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F171E; --surface:#16222C; --ink:#E6ECEF; --muted:#9AAAB4; --line:#2A3A47;
+  --hivis:#F5BD1F; --hivis-ink:#121A20; --slate:#1C2E3C; --slate-ink:#E6ECEF; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 1rem/1.6 var(--body);padding-inline:16px}
+.wrap{max-width:1080px;margin-inline:auto}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:.95;margin:0;letter-spacing:.005em}
+h2{font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;text-transform:uppercase}
+h3{font-size:1.5rem;font-weight:800;text-transform:uppercase}
+p{margin:0;max-width:62ch}
+a{color:inherit}
+.label{font:500 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+:focus-visible{outline:3px solid var(--hivis);outline-offset:2px}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-block:18px}
+.brand{font:900 1.6rem/1 var(--display);text-transform:uppercase;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.brand i{display:block;width:26px;height:18px;background:repeating-linear-gradient(-45deg,var(--hivis) 0 6px,var(--ink) 6px 12px);border-radius:2px}
+.sat{font:500 .7rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--hivis);color:var(--hivis-ink);padding:6px 8px;border-radius:3px}
+.top nav{display:flex;gap:18px;flex-wrap:wrap;font-weight:500}
+.top nav a{text-decoration:none}
+.top nav a:hover{text-decoration:underline;text-decoration-color:var(--hivis);text-decoration-thickness:3px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:28px 56px}
+.hero>*{min-width:0}
+.hero h1{font-size:clamp(3.4rem,10vw,6.6rem);font-weight:900;text-transform:uppercase}
+.hero h1 span{background:var(--hivis);color:var(--hivis-ink);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hero p.lead{font-size:1.15rem;margin-top:20px;color:var(--muted)}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;font:600 1rem/1 var(--body);border-radius:4px;text-decoration:none;border:2px solid var(--ink);cursor:pointer;background:transparent;color:var(--ink)}
+.btn.primary{background:var(--hivis);border-color:var(--hivis);color:var(--hivis-ink)}
+.btn:hover{transform:translateY(-1px)}
+.facts{display:flex;gap:28px;flex-wrap:wrap;margin-top:32px}
+.facts div{display:grid;gap:4px}
+.facts b{font:800 1.8rem/1 var(--display)}
+
+/* gauge */
+.gauge{background:var(--slate);color:var(--slate-ink);border-radius:6px;padding:24px;display:grid;gap:18px}
+.gauge .label{color:var(--slate-ink);opacity:.75}
+.gauge svg{width:100%;height:auto;display:block}
+.loads{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.loads button{font:500 .85rem/1 var(--mono);padding:10px 0;border-radius:3px;border:1px solid rgba(255,255,255,.25);background:transparent;color:var(--slate-ink);cursor:pointer}
+.loads button[aria-pressed="true"]{background:var(--hivis);color:var(--hivis-ink);border-color:var(--hivis)}
+.price{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+.price strong{font:900 3.4rem/1 var(--display);font-variant-numeric:tabular-nums}
+.price small{display:block;opacity:.8;max-width:26ch}
+
+section{padding-block:56px;border-top:1px solid var(--line)}
+.head{display:grid;gap:12px;margin-bottom:32px}
+
+/* who */
+.who{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.who article{background:var(--surface);padding:26px;display:grid;gap:10px;align-content:start}
+
+/* agents */
+.agents{background:var(--slate);color:var(--slate-ink);border-radius:6px;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.agents>*{min-width:0}
+.agents .label{color:var(--hivis)}
+.agents ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.agents li{display:grid;grid-template-columns:22px 1fr;gap:12px}
+.agents li::before{content:"";width:14px;height:14px;margin-top:6px;background:var(--hivis);border-radius:2px}
+.agents p{opacity:.88}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;gap:8px;align-content:start}
+.steps li::before{content:counter(s);font:900 3rem/1 var(--display);color:var(--hivis);-webkit-text-stroke:1px var(--ink)}
+
+/* rates */
+.rates{display:grid;grid-template-columns:1.2fr .8fr;gap:36px}
+.rates>*{min-width:0}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line)}
+th{font:500 .75rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+td.r,th.r{text-align:right}
+td.r{font:500 1rem var(--mono)}
+.no{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:24px;display:grid;gap:12px;align-content:start}
+.no ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+
+/* area */
+.area{display:flex;flex-wrap:wrap;gap:8px}
+.area span{border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:999px;font-weight:500}
+.area.home span{border:2px solid var(--hivis);font-weight:600}
+input[type=file]{padding:9px}
+
+/* quote */
+.quote{display:grid;grid-template-columns:.8fr 1.2fr;gap:36px}
+.quote>*{min-width:0}
+form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+form .full{grid-column:1/-1}
+label.f{display:grid;gap:6px;font-weight:500;font-size:.9rem}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:11px 12px;width:100%}
+textarea{min-height:110px;resize:vertical}
+.phone{font:900 2.4rem/1 var(--display);user-select:all}
+.sent{grid-column:1/-1;background:var(--surface);border:2px solid var(--hivis);border-radius:6px;padding:18px;display:grid;gap:10px}
+.sent pre{white-space:pre-wrap;margin:0;font:500 .85rem/1.5 var(--mono)}
+footer{border-top:1px solid var(--line);padding-block:28px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}
+
+@media (max-width:820px){
+  .hero,.agents,.rates,.quote{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .agents{padding:26px}
+}
+@media (max-width:520px){
+  .who,.steps,form{grid-template-columns:1fr}
+  .top nav{gap:14px;font-size:.92rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}.btn:hover{transform:none}}
+#fill{transition:width .35s ease}
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><i aria-hidden="true"></i>Wasatch Haul Co.<span class="sat">Saturdays only</span></div>
+    <nav aria-label="Main">
+      <a href="#agents">For agents</a>
+      <a href="#rates">Rates</a>
+      <a href="#area">Service area</a>
+      <a href="#quote">Get a quote</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <p class="label">Saturday-only junk removal · Davis County, Utah</p>
+      <h1 style="margin-top:14px">Junk gone. <span>Listing ready.</span></h1>
+      <p class="lead">Book by Thursday, gone by Saturday. We haul on Saturdays only, 7am to 6pm, across Kaysville, Farmington, Layton and the rest of Davis County. Send photos ahead of time for a firm price, then pick your Saturday time window.</p>
+      <div class="ctas">
+        <a class="btn primary" href="#quote">Get a free quote</a>
+        <a class="btn" href="#agents">Agent program</a>
+      </div>
+      <div class="facts">
+        <div><b>Sat</b><span class="label">Only day we haul, 7am–6pm</span></div>
+        <div><b>3</b><span class="label">Time windows each Saturday</span></div>
+        <div><b>$99</b><span class="label">Minimum pickup</span></div>
+      </div>
+    </div>
+
+    <div class="gauge" aria-label="Price estimator">
+      <div class="label">How full is your load?</div>
+      <svg viewBox="0 0 400 170" role="img" aria-labelledby="trailerTitle">
+        <title id="trailerTitle">Trailer load gauge</title>
+        <rect x="20" y="30" width="320" height="100" rx="4" fill="none" stroke="currentColor" stroke-width="4"/>
+        <clipPath id="bed"><rect x="24" y="34" width="312" height="92"/></clipPath>
+        <g clip-path="url(#bed)">
+          <rect id="fillRect" x="24" y="34" width="156" height="92" fill="var(--hivis)"/>
+        </g>
+        <g stroke="currentColor" stroke-opacity=".35" stroke-width="2" stroke-dasharray="4 5">
+          <line x1="100" y1="34" x2="100" y2="126"/><line x1="180" y1="34" x2="180" y2="126"/><line x1="260" y1="34" x2="260" y2="126"/>
+        </g>
+        <line x1="340" y1="110" x2="390" y2="110" stroke="currentColor" stroke-width="4"/>
+        <circle cx="390" cy="110" r="6" fill="currentColor"/>
+        <circle cx="140" cy="145" r="18" fill="var(--slate)" stroke="currentColor" stroke-width="4"/>
+        <circle cx="200" cy="145" r="18" fill="var(--slate)" stroke="currentColor" stroke-width="4"/>
+        <circle cx="140" cy="145" r="5" fill="currentColor"/><circle cx="200" cy="145" r="5" fill="currentColor"/>
+      </svg>
+      <div class="loads" role="group" aria-label="Load size">
+        <button type="button" data-i="0">Item</button>
+        <button type="button" data-i="1">1/4</button>
+        <button type="button" data-i="2" aria-pressed="true">1/2</button>
+        <button type="button" data-i="3">3/4</button>
+        <button type="button" data-i="4">Full</button>
+      </div>
+      <div class="price">
+        <strong id="priceOut">$329</strong>
+        <small id="descOut">Half a trailer: a garage corner or a basement room.</small>
+      </div>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="head">
+      <p class="label">Who we work with</p>
+      <h2>One truck, four kinds of deadline</h2>
+    </div>
+    <div class="who">
+      <article><h3>Sellers &amp; agents</h3><p>Pre-listing cleanouts before the photographer arrives, and the leftovers after closing.</p></article>
+      <article><h3>Landlords &amp; property managers</h3><p>Tenant move-out trash-outs, cleared out on Saturday so the unit is ready for the next tenant.</p></article>
+      <article><h3>Estates &amp; downsizing</h3><p>Whole-house cleanouts done with care. Usable furniture goes to donation, not the landfill.</p></article>
+      <article><h3>Homeowners</h3><p>Garages, basements, old couches, hot tubs, yard debris. Point at it and it's gone.</p></article>
+    </div>
+  </section>
+
+  <section id="agents">
+    <div class="agents">
+      <div style="display:grid;gap:14px;align-content:start">
+        <p class="label">Agent partner program</p>
+        <h2>Your listing goes live on schedule</h2>
+        <p>Text us photos from the walkthrough during the week. We quote the same day, clear the house on Saturday so it shows clean on Monday, and send you before-and-after photos for your files.</p>
+        <div class="ctas"><a class="btn primary" href="#quote">Book a cleanout</a></div>
+      </div>
+      <ul>
+        <li><span><b>First pick of Saturday slots</b> for partner agents, so the house is clear before a Sunday open house or Monday photos.</span></li>
+        <li><span><b>Payment can wait until closing</b>, so your seller doesn't need cash up front.</span></li>
+        <li><span><b>Before/after photos</b> sent to you the same day.</span></li>
+        <li><span><b>One free single-item pickup</b> for each of your buyers after they move in.</span></li>
+        <li><span><b>Co-branded flyers</b> you can hand to sellers at the listing appointment.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="head">
+      <p class="label">How it works</p>
+      <h2>From photos to swept floor</h2>
+    </div>
+    <ol class="steps">
+      <li><h3>Send photos</h3><p>Before Thursday evening, by the form below or by text. No visit needed for most jobs.</p></li>
+      <li><h3>Get a firm price</h3><p>Priced by how much of the trailer you fill. The quote includes landfill fees.</p></li>
+      <li><h3>We haul Saturday</h3><p>Two people, straps and dollies, in the time window you picked. You don't lift anything.</p></li>
+      <li><h3>Donate, recycle, dump</h3><p>Good furniture goes to local donation centers and metal gets recycled before anything hits the landfill.</p></li>
+    </ol>
+  </section>
+
+  <section id="rates">
+    <div class="rates">
+      <div>
+        <div class="head"><p class="label">Rates</p><h2>Priced by the load</h2></div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Load</th><th>Fits about</th><th class="r">Price</th></tr></thead>
+            <tbody>
+              <tr><td>Single item</td><td>Couch, washer, water heater</td><td class="r">$99</td></tr>
+              <tr><td>1/4 trailer</td><td>Small room, a few pieces</td><td class="r">$199</td></tr>
+              <tr><td>1/2 trailer</td><td>Garage corner, basement room</td><td class="r">$329</td></tr>
+              <tr><td>3/4 trailer</td><td>Most of a garage</td><td class="r">$449</td></tr>
+              <tr><td>Full trailer</td><td>Several rooms, small estate</td><td class="r">$549</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px;color:var(--muted);font-size:.92rem">Added fees: mattress or box spring $25 each, refrigerator or freezer $30, tires $10 each, stairs or long carry +10–15%. Concrete, dirt and roofing are quoted by weight.</p>
+      </div>
+      <aside class="no">
+        <h3>What we can't take</h3>
+        <ul>
+          <li>Paint, solvents, chemicals</li>
+          <li>Gasoline, oil, propane tanks</li>
+          <li>Asbestos</li>
+          <li>Medical waste</li>
+        </ul>
+        <p style="color:var(--muted);font-size:.92rem">Salt Lake County runs a household hazardous waste drop-off for these. Ask us and we'll point you to it.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="area">
+    <div class="head"><p class="label">Service area</p><h2>Home base: Davis County</h2></div>
+    <div style="display:grid;gap:22px">
+      <div style="display:grid;gap:10px">
+        <p class="label">Davis County · Saturdays only</p>
+        <div class="area home">
+          <span>Kaysville</span><span>Farmington</span><span>Layton</span><span>Fruit Heights</span><span>Centerville</span><span>Bountiful</span><span>West Bountiful</span><span>Woods Cross</span><span>North Salt Lake</span><span>Clearfield</span><span>Syracuse</span><span>Clinton</span><span>Sunset</span><span>West Point</span>
+        </div>
+      </div>
+      <div style="display:grid;gap:10px">
+        <p class="label">Also serving Salt Lake County · Saturdays only</p>
+        <div class="area">
+          <span>Salt Lake City</span><span>Sugar House</span><span>Millcreek</span><span>Holladay</span><span>Murray</span><span>Cottonwood Heights</span><span>Sandy</span><span>West Valley City</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quote">
+    <div class="quote">
+      <div style="display:grid;gap:14px;align-content:start">
+        <p class="label">Free quote</p>
+        <h2>Tell us what's going</h2>
+        <p>Fill this out, or call or text us directly.</p>
+        <div class="phone">(801) 555-0142</div>
+        <p class="label">Hauling Saturdays only, 7am–6pm · Book by Thursday evening</p>
+      </div>
+      <form id="qf" novalidate>
+        <p hidden><label>Leave this empty<input id="q-bot" name="bot-field"></label></p>
+        <label class="f">Name<input id="q-name" name="name" required autocomplete="name"></label>
+        <label class="f">Phone<input id="q-phone" name="phone" type="tel" required autocomplete="tel"></label>
+        <label class="f">City
+          <select id="q-city" name="city">
+            <option>Kaysville</option><option>Farmington</option><option>Layton</option><option>Fruit Heights</option><option>Centerville</option><option>Bountiful</option><option>West Bountiful</option><option>Woods Cross</option><option>North Salt Lake</option><option>Clearfield</option><option>Syracuse</option><option>Clinton</option><option>Sunset</option><option>West Point</option><option>Salt Lake County</option><option>Other</option>
+          </select>
+        </label>
+        <label class="f">I'm a…
+          <select id="q-type" name="type">
+            <option>Homeowner</option><option>Real estate agent</option><option>Landlord / property manager</option><option>Estate / family</option>
+          </select>
+        </label>
+        <label class="f">Estimated load
+          <select id="q-load" name="load">
+            <option>Single item</option><option>1/4 trailer</option><option selected>1/2 trailer</option><option>3/4 trailer</option><option>Full trailer</option><option>Not sure</option>
+          </select>
+        </label>
+        <label class="f">Which Saturday?<select id="q-date" name="saturday"></select></label>
+        <label class="f">Time window<select id="q-window" name="window"><option>Morning (7–10am)</option><option>Midday (10am–1pm)</option><option>Afternoon (1–4pm)</option><option>Any time</option></select></label>
+        <label class="f full">What needs to go?<textarea id="q-notes" name="notes" placeholder="e.g. old sectional, two mattresses, boxes in the garage"></textarea></label>
+        <label class="f full">Photo of the pile (optional, under 8 MB)<input id="q-photo" name="photo" type="file" accept="image/*"></label>
+        <div class="full"><button class="btn primary" type="submit" id="qsubmit">Request my quote</button></div>
+        <p class="full" id="qerr" style="color:var(--ink);font-weight:600" hidden>Add your name and phone so we can reach you.</p>
+        <div class="sent" id="thanks" hidden>
+          <b>Got it. We'll text you a price and confirm your Saturday window.</b>
+          <p>Book by Thursday evening to get the coming Saturday.</p>
+        </div>
+        <div class="sent" id="sent" hidden>
+          <b>We couldn't send this from here. Copy it and text it to (801) 555-0142 with your photos.</b>
+          <pre id="sentText"></pre>
+          <div><button class="btn" type="button" id="copyBtn">Copy request</button></div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Wasatch Haul Co. · Licensed &amp; insured · Davis County, Utah</span>
+    <span>Donating usable items to local donation centers</span>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ===== Supabase settings: paste yours from Supabase > Project Settings > API =====
+var SUPABASE_URL = 'https://YOUR-PROJECT-ID.supabase.co';
+var SUPABASE_ANON_KEY = 'YOUR-ANON-PUBLIC-KEY';
+// ================================================================================
+var sb = (window.supabase && SUPABASE_URL.indexOf('YOUR-')<0) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+// Saves one quote request. Uploads the photo first (if any), then inserts the row.
+async function sendQuote(row, photo){
+  if(!sb) throw new Error('Supabase is not set up yet');
+  if(photo){
+    if(photo.size > 8*1024*1024) throw new Error('Photo over 8 MB');
+    var path = Date.now() + '-' + Math.random().toString(36).slice(2) + '-' + photo.name.replace(/[^a-z0-9.]+/gi,'_');
+    var up = await sb.storage.from('quote-photos').upload(path, photo);
+    if(up.error) throw up.error;
+    row.photo_path = path;
+  }
+  var res = await sb.from('quotes').insert(row);
+  if(res.error) throw res.error;
+}
+</script>
+<script>
+(function(){
+  var loads=[
+    {p:99,f:.1,d:"One bulky item: a couch, washer, or water heater."},
+    {p:199,f:.25,d:"A quarter trailer: a small room or a few pieces."},
+    {p:329,f:.5,d:"Half a trailer: a garage corner or a basement room."},
+    {p:449,f:.75,d:"Three quarters: most of a two-car garage."},
+    {p:549,f:1,d:"A full trailer: several rooms or a small estate."}
+  ];
+  var btns=document.querySelectorAll('.loads button'),rect=document.getElementById('fillRect');
+  function set(i){
+    btns.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.i==i?'true':'false')});
+    rect.setAttribute('width',Math.round(312*loads[i].f));
+    document.getElementById('priceOut').textContent='$'+loads[i].p;
+    document.getElementById('descOut').textContent=loads[i].d;
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){set(+b.dataset.i)})});
+
+  (function(){
+    var sel=document.getElementById('q-date'),d=new Date(),n=0;
+    d.setHours(12,0,0,0);
+    var add=(6-d.getDay()+7)%7; if(add===0||(add===1&&new Date().getHours()>=20)) add+=7;
+    d.setDate(d.getDate()+add);
+    for(;n<6;n++){var o=document.createElement('option');o.textContent=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});sel.appendChild(o);d.setDate(d.getDate()+7)}
+  })();
+  var form=document.getElementById('qf');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var g=function(id){return document.getElementById(id).value.trim()};
+    var err=document.getElementById('qerr');
+    if(!g('q-name')||!g('q-phone')){err.hidden=false;return}
+    err.hidden=true;
+    if(g('q-bot'))return;
+    var t='Quote request\nName: '+g('q-name')+'\nPhone: '+g('q-phone')+'\nCity: '+g('q-city')+'\nI am a: '+g('q-type')+'\nLoad: '+g('q-load')+'\nSaturday: '+g('q-date')+' ('+g('q-window')+')'+'\nItems: '+(g('q-notes')||'-');
+    var btn=document.getElementById('qsubmit');
+    btn.disabled=true;btn.textContent='Sending…';
+    function fallback(){
+      document.getElementById('sentText').textContent=t;
+      document.getElementById('sent').hidden=false;
+      btn.disabled=false;btn.textContent='Request my quote';
+    }
+    try{
+      sendQuote({
+        name:g('q-name'),phone:g('q-phone'),city:g('q-city'),customer_type:g('q-type'),
+        load_size:g('q-load'),saturday:g('q-date'),time_window:g('q-window'),notes:g('q-notes')||null
+      },document.getElementById('q-photo').files[0]).then(function(){
+        form.querySelectorAll('label.f,.full>button').forEach(function(el){el.hidden=true});
+        document.getElementById('thanks').hidden=false;document.getElementById('sent').hidden=true;
+      },function(err){console.error(err);fallback()});
+    }catch(x){fallback()}
+  });
+  document.getElementById('copyBtn').addEventListener('click',function(){
+    var b=this,txt=document.getElementById('sentText').textContent;
+    var sel=function(){var r=document.createRange();r.selectNodeContents(document.getElementById('sentText'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected, press copy'};
+    try{navigator.clipboard.writeText(txt).then(function(){b.textContent='Copied'},sel)}catch(x){sel()}
+  });
+})();
+</script>
+
+</body>
+</html>
