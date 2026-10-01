@@ -80,13 +80,13 @@ section{padding-block:56px;border-top:1px solid var(--line)}
 .agents{background:var(--slate);color:var(--slate-ink);border-radius:6px;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:36px}
 .agents>*{min-width:0}
 .agents .label{color:var(--hivis)}
-.agents ul{list-:none;margin:0;padding:0;display:grid;gap:14px}
+.agents ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
 .agents li{display:grid;grid-template-columns:22px 1fr;gap:12px}
 .agents li::before{content:"";width:14px;height:14px;margin-top:6px;background:var(--hivis);border-radius:2px}
 .agents p{opacity:.88}
 
 /* steps */
-.steps{list-:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s}
 .steps li{counter-increment:s;display:grid;gap:8px;align-content:start}
 .steps li::before{content:counter(s);font:900 3rem/1 var(--display);color:var(--hivis);-webkit-text-stroke:1px var(--ink)}
 
@@ -131,7 +131,7 @@ footer{border-top:1px solid var(--line);padding-block:28px;display:flex;justify-
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.btn:hover{transform:none}}
 #fill{transition:width .35s ease}
-</>
+</style>
 <style>body{margin:0}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -352,7 +352,7 @@ var sb = (window.supabase && SUPABASE_URL.indexOf('YOUR-')<0) ? window.supabase.
 
 // Saves one quote request. Uploads the photo first (if any), then inserts the row.
 async function sendQuote(row, photo){
-  if(!sb) throw new Error('Supabase is not set up yet');
+  if(!window.supabase) throw new Error('Supabase script did not load'); if(!sb) throw new Error('Supabase URL or key missing');
   if(photo){
     if(photo.size > 8*1024*1024) throw new Error('Photo over 8 MB');
     var path = Date.now() + '-' + Math.random().toString(36).slice(2) + '-' + photo.name.replace(/[^a-z0-9.]+/gi,'_');
@@ -400,7 +400,7 @@ async function sendQuote(row, photo){
     var t='Quote request\nName: '+g('q-name')+'\nPhone: '+g('q-phone')+'\nCity: '+g('q-city')+'\nI am a: '+g('q-type')+'\nLoad: '+g('q-load')+'\nSaturday: '+g('q-date')+' ('+g('q-window')+')'+'\nItems: '+(g('q-notes')||'-');
     var btn=document.getElementById('qsubmit');
     btn.disabled=true;btn.textContent='Sending…';
-          },function(err){console.error(err);fallback();document.getElementById('sentText').textContent+='\n\nError: '+(err&&err.message||err)});
+    function fallback(){
       document.getElementById('sentText').textContent=t;
       document.getElementById('sent').hidden=false;
       btn.disabled=false;btn.textContent='Request my quote';
@@ -412,7 +412,7 @@ async function sendQuote(row, photo){
       },document.getElementById('q-photo').files[0]).then(function(){
         form.querySelectorAll('label.f,.full>button').forEach(function(el){el.hidden=true});
         document.getElementById('thanks').hidden=false;document.getElementById('sent').hidden=true;
-      },function(err){console.error(err);fallback()});
+      },function(err){console.error(err);fallback();document.getElementById('sentText').textContent+='\n\nError: '+(err&&err.message||err)});
     }catch(x){fallback()}
   });
   document.getElementById('copyBtn').addEventListener('click',function(){
